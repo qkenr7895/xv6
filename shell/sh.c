@@ -66,20 +66,17 @@ runcmd(struct cmd *cmd)
 		execvp(ecmd->argv[0], ecmd->argv) ;
 		
 		fprintf(stderr, "wrong command\n");
-    // Your code here ...
     break;
 
   case '>':
   case '<':
 		rcmd = (struct redircmd*)cmd;
-		
+	
+		close(rcmd->fd);
 		if((pfd = open(rcmd->file, rcmd->flags, 0644)) == -1) {
 			fprintf(stderr, "No such file or directory\n");
 			break;
 		}
-		dup2(pfd, rcmd->fd);
-
-		// Your code here ...
     runcmd(rcmd->cmd);
     break;
 
@@ -89,11 +86,15 @@ runcmd(struct cmd *cmd)
 		pipe(p);
 	
 		if(fork1() == 0) {
-			dup2(p[1], 1);
+			close(1);
+			dup(p[1]);
 			close(p[0]);
+			close(p[1]);
 			runcmd(pcmd->left);
 		}
-		dup2(p[0], 0);
+		close(0);
+		dup(p[0]);
+		close(p[0]);
 		close(p[1]);
 		runcmd(pcmd->right);
     break;
