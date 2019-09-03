@@ -14,7 +14,7 @@
 00000000 ulib.c
 00000000 printf.c
 00000610 printint
-00000a10 digits.1107
+00000a10 digits.1109
 00000000 umalloc.c
 00000da0 freep
 00000da4 base
@@ -51,6 +51,7 @@
 00000d9c _edata
 000011c0 _end
 000001d0 match
+00000602 date
 000005c2 link
 00000562 exit
 000004f0 atoi

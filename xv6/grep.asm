@@ -1225,10 +1225,12 @@ SYSCALL(uptime)
  5fa:	b8 0e 00 00 00       	mov    $0xe,%eax
  5ff:	cd 40                	int    $0x40
  601:	c3                   	ret    
- 602:	66 90                	xchg   %ax,%ax
- 604:	66 90                	xchg   %ax,%ax
- 606:	66 90                	xchg   %ax,%ax
- 608:	66 90                	xchg   %ax,%ax
+
+00000602 <date>:
+SYSCALL(date)
+ 602:	b8 16 00 00 00       	mov    $0x16,%eax
+ 607:	cd 40                	int    $0x40
+ 609:	c3                   	ret    
  60a:	66 90                	xchg   %ax,%ax
  60c:	66 90                	xchg   %ax,%ax
  60e:	66 90                	xchg   %ax,%ax

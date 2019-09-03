@@ -51,9 +51,11 @@ sys_sbrk(void)
   if(argint(0, &n) < 0)
     return -1;
   addr = myproc()->sz;
-  if(growproc(n) < 0)
+	
+	if(growproc(n) < 0)
     return -1;
-  return addr;
+	
+	return addr;
 }
 
 int
@@ -89,3 +91,20 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_date(void)
+{
+	struct rtcdate *r;
+
+	if(argptr(0, (void*)&r, sizeof(*r)) < 0) {
+		return -1;
+	}
+	cmostime(r);
+	return 0;
+}
+
+
+
+
+
