@@ -7,4 +7,4 @@ xv6
 
 
 ## Additions
-1. [User Program Registration]
+1. [User Program Registration](https://github.com/qkenr7895/xv6/wiki/Additions-1.-User-Program-Registration)
