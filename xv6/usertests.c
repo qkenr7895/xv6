@@ -430,12 +430,13 @@ mem(void)
   void *m1, *m2;
   int pid, ppid;
 
-  printf(1, "mem test\n");
+ 	printf(1, "mem test\n");
   ppid = getpid();
   if((pid = fork()) == 0){
     m1 = 0;
-    while((m2 = malloc(10001)) != 0){
-      *(char**)m2 = m1;
+		while((m2 = malloc(10001)) != 0){
+			if((int)m2 % 1000 == 0)
+			*(char**)m2 = m1;
       m1 = m2;
     }
     while(m1){
@@ -1420,13 +1421,13 @@ sbrktest(void)
 
   printf(stdout, "sbrk test\n");
   oldbrk = sbrk(0);
-
+	
   // can one sbrk() less than a page?
   a = sbrk(0);
-  int i;
+	int i;
   for(i = 0; i < 5000; i++){
     b = sbrk(1);
-    if(b != a){
+		if(b != a){
       printf(stdout, "sbrk test failed %d %x %x\n", i, a, b);
       exit();
     }
@@ -1447,7 +1448,7 @@ sbrktest(void)
   if(pid == 0)
     exit();
   wait();
-
+	
   // can one grow address space to something big?
 #define BIG (100*1024*1024)
   a = sbrk(0);
@@ -1497,7 +1498,7 @@ sbrktest(void)
   for(a = (char*)(KERNBASE); a < (char*) (KERNBASE+2000000); a += 50000){
     ppid = getpid();
     pid = fork();
-    if(pid < 0){
+		if(pid < 0){
       printf(stdout, "fork failed\n");
       exit();
     }
@@ -1526,6 +1527,7 @@ sbrktest(void)
     if(pids[i] != -1)
       read(fds[0], &scratch, 1);
   }
+
   // if those failed allocations freed up the pages they did allocate,
   // we'll be able to allocate here
   c = sbrk(4096);

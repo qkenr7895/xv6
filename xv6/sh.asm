@@ -361,19 +361,20 @@ fork1(void)
 
   case EXEC:
     ecmd = (struct execcmd*)cmd;
-    if(ecmd->argv[0] == 0)
+		if(ecmd->argv[0] == 0)
      21d:	8b 43 04             	mov    0x4(%ebx),%eax
      220:	85 c0                	test   %eax,%eax
      222:	74 e0                	je     204 <runcmd+0x84>
       exit();
-    exec(ecmd->argv[0], ecmd->argv);
+		exec(ecmd->argv[0], ecmd->argv);
      224:	52                   	push   %edx
      225:	52                   	push   %edx
      226:	8d 53 04             	lea    0x4(%ebx),%edx
      229:	52                   	push   %edx
      22a:	50                   	push   %eax
      22b:	e8 2a 0b 00 00       	call   d5a <exec>
-    printf(2, "exec %s failed\n", ecmd->argv[0]);
+    
+		printf(2, "exec %s failed\n", ecmd->argv[0]);
      230:	83 c4 0c             	add    $0xc,%esp
      233:	ff 73 04             	pushl  0x4(%ebx)
      236:	68 9a 11 00 00       	push   $0x119a

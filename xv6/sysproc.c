@@ -10,7 +10,7 @@
 int
 sys_fork(void)
 {
-  return fork();
+	return fork();
 }
 
 int
@@ -47,13 +47,24 @@ sys_sbrk(void)
 {
   int addr;
   int n;
+	uint sz;
 
   if(argint(0, &n) < 0)
     return -1;
-  addr = myproc()->sz;
 	
-	if(growproc(n) < 0)
-    return -1;
+	addr = myproc()->sz;
+
+	if(addr + n >= (KERNBASE/10)) {
+		cprintf("illegal kernel allocation\n");
+		return -1;
+	}
+
+	myproc()->sz = addr+n;
+
+	if(n < 0) {
+		if((sz = deallocuvm(myproc()->pgdir, addr, addr + n)) == 0) 
+			return -1;
+	}
 	
 	return addr;
 }

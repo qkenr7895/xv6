@@ -73,10 +73,11 @@ runcmd(struct cmd *cmd)
 
   case EXEC:
     ecmd = (struct execcmd*)cmd;
-    if(ecmd->argv[0] == 0)
+		if(ecmd->argv[0] == 0)
       exit();
-    exec(ecmd->argv[0], ecmd->argv);
-    printf(2, "exec %s failed\n", ecmd->argv[0]);
+		exec(ecmd->argv[0], ecmd->argv);
+    
+		printf(2, "exec %s failed\n", ecmd->argv[0]);
     break;
 
   case REDIR:

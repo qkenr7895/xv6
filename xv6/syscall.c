@@ -178,7 +178,9 @@ syscall(void)
 		//
 		// print syscall name and return value
 		//
-		// cprintf("%s->%d\n", syscall_name[num], curproc->tf->eax);	
+		/*
+		cprintf("%s->%d\n", syscall_name[num], curproc->tf->eax);	
+		*/
 		//
 	} else {
     cprintf("%d %s: unknown sys call %d\n",
