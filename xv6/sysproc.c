@@ -53,12 +53,6 @@ sys_sbrk(void)
     return -1;
 	
 	addr = myproc()->sz;
-
-	if(addr + n >= (KERNBASE/10)) {
-		cprintf("illegal kernel allocation\n");
-		return -1;
-	}
-
 	myproc()->sz = addr+n;
 
 	if(n < 0) {

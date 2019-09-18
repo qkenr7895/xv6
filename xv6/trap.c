@@ -96,7 +96,7 @@ trap(struct trapframe *tf)
 			myproc()->killed = 1;	
 			return;
 		}
-		
+	
 		mem = kalloc();
 		if(mem == 0) {
 			cprintf("allocuvm out of memory\n");
