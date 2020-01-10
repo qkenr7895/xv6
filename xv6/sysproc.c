@@ -109,7 +109,30 @@ sys_date(void)
 	return 0;
 }
 
+// xv6 cpu alarm
+// if ticks > 0, every n ticks alarm process
+// if ticks == -1, turn off alarm
+int
+sys_alarm(void)
+{
+  int ticks;
+  void (*handler)();
 
-
-
-
+  if(argint(0, &ticks) < 0)
+    return -1;
+  if(argptr(1, (char**)&handler, 1) < 0)
+    return -1;
+  
+  if(ticks < -1 || ticks == 0) return -1;
+  if(handler == 0) return -1;
+  
+  if(ticks == -1) {
+    myproc()->alarmstate = 0;
+  } else {
+    myproc()->alarmticks = ticks;
+    myproc()->alarmhandler = (uint)handler;
+    myproc()->alarmstate = 1;
+  }
+  
+  return 0;
+}

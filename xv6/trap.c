@@ -59,9 +59,13 @@ trap(struct trapframe *tf)
     if(cpuid() == 0){
       acquire(&tickslock);
       ticks++;
+      if(myproc() != 0 && myproc()->alarmstate == 1) {
+        myproc()->ticksby++;
+      }
       wakeup(&ticks);
       release(&tickslock);
     }
+
     lapiceoi();
     break;
   case T_IRQ0 + IRQ_IDE:
@@ -90,10 +94,19 @@ trap(struct trapframe *tf)
 		oldsz = myproc()->sz;
 		newsz = rcr2();
 		pgdir = myproc()->pgdir;
-	
-		if(newsz >= KERNBASE) {
+    
+    if(newsz == 0xffffffff && myproc() != 0 && myproc()->alarmstate == 2/* && myproc()->validcheck == tf->esp*/) {
+      myproc()->alarmstate = 1;
+      myproc()->ticksby = 0;
+      tf->eip = myproc()->resume;
+      tf->eax = myproc()->eax;
+      tf->edx = myproc()->edx;
+      tf->ecx = myproc()->ecx;
+      break;
+    }
+		if(newsz >= KERNBASE && (tf->cs & 3) == 3) {
 			cprintf("illegal kernel access\n");
-			myproc()->killed = 1;	
+      myproc()->killed = 1;	
 			return;
 		}
 	
@@ -131,7 +144,24 @@ trap(struct trapframe *tf)
             tf->err, cpuid(), tf->eip, rcr2());
     myproc()->killed = 1;
   }
-
+  // Alarm process
+  if(myproc() != 0 && (tf->cs & 3) == 3 && tf->trapno == T_IRQ0+IRQ_TIMER && 
+    myproc()->alarmstate == 1 && myproc()->ticksby > myproc()->alarmticks) {
+    myproc()->alarmstate = 2;
+    myproc()->ticksby = 0;
+  
+    //myproc()->validcheck = tf->esp;
+    myproc()->resume = tf->eip;
+    
+    myproc()->eax = tf->eax;
+    myproc()->edx = tf->edx;
+    myproc()->ecx = tf->ecx;
+    
+    tf->esp -= 4;
+    *(uint *)(tf->esp) = 0xffffffff;
+    tf->eip = myproc()->alarmhandler;
+  }
+  
   // Force process exit if it has been killed and is in user space.
   // (If it is still executing in the kernel, let it keep running
   // until it gets to the regular system call return.)

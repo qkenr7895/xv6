@@ -112,6 +112,18 @@ found:
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
 
+  // Process alarm fields
+  p->alarmticks = 0;
+  p->ticksby = 0;
+  p->alarmhandler = 0;
+  p->alarmstate = 0;
+  p->resume = 0;
+  p->validcheck = 0;
+  
+  p->eax = 0;
+  p->edx = 0;
+  p->ecx = 0;
+
   return p;
 }
 
