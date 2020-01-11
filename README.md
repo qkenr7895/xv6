@@ -5,6 +5,7 @@ xv6
 2. [shell](https://github.com/qkenr7895/xv6/wiki/2.-shell)
 3. [system calls](https://github.com/qkenr7895/xv6/wiki/3.-system-calls)
 4. [lazy page allocation](https://github.com/qkenr7895/xv6/wiki/4.-lazy-page-allocation)
+5. [cpu alarm](https://github.com/qkenr7895/xv6/wiki/5.-CPU-alarm)
 
 ## Addition
 1. [User Program Registration](https://github.com/qkenr7895/xv6/wiki/Additions-1.-User-Program-Registration)

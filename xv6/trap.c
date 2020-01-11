@@ -95,7 +95,7 @@ trap(struct trapframe *tf)
 		newsz = rcr2();
 		pgdir = myproc()->pgdir;
     
-    if(newsz == 0xffffffff && myproc() != 0 && myproc()->alarmstate == 2/* && myproc()->validcheck == tf->esp*/) {
+    if(newsz == 0xffffffff && myproc() != 0 && myproc()->alarmstate == 2 && myproc()->validcheck == tf->esp) {
       myproc()->alarmstate = 1;
       myproc()->ticksby = 0;
       tf->eip = myproc()->resume;
@@ -150,7 +150,7 @@ trap(struct trapframe *tf)
     myproc()->alarmstate = 2;
     myproc()->ticksby = 0;
   
-    //myproc()->validcheck = tf->esp;
+    myproc()->validcheck = tf->esp;
     myproc()->resume = tf->eip;
     
     myproc()->eax = tf->eax;
