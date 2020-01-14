@@ -8,4 +8,6 @@ xv6
 5. [cpu alarm](https://github.com/qkenr7895/xv6/wiki/5.-CPU-alarm)
 
 ## Addition
-1. [User Program Registration](https://github.com/qkenr7895/xv6/wiki/Additions-1.-User-Program-Registration)
+1. [FCFS Scheduling](https://github.com/qkenr7895/xv6/wiki/Additions-1.-FCFS-Scheduling)
+2. [MLFQ Scheduling](https://github.com/qkenr7895/xv6/wiki/Additions-2.-MLFQ-Scheduling)
+3. [Light Weight Process](https://github.com/qkenr7895/xv6/wiki/Additions-3.-LWP)
