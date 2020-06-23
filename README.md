@@ -12,3 +12,4 @@ xv6
 1. [FCFS Scheduling](https://github.com/qkenr7895/xv6/wiki/Additions-1.-FCFS-Scheduling)
 2. [MLFQ Scheduling](https://github.com/qkenr7895/xv6/wiki/Additions-2.-MLFQ-Scheduling)
 3. [Light Weight Process](https://github.com/qkenr7895/xv6/wiki/Additions-3.-LWP)
+4. [Process Management](https://github.com/qkenr7895/xv6/wiki/Additions-4.-Process-Management)
